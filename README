@@ -13,7 +13,7 @@ cat rules > openmediavault/debian/rules
 - update version and build
 
 cd openmediavault
-export DEBFULLNAME="Luis Antonio Garcia Gisbert"; export DEBEMAIL="...@..."; dch --force-distribution -v "$(head -1 debian/changelog |sed -e "s%^.*(%%;s%).*$%%")+aurex.getent.$(date "+%Y%m%d.%H%M")" --distribution unstable "custom aurex patch to improve speed when retrieving user list"
+export DEBFULLNAME="Luis Antonio Garcia Gisbert"; export DEBEMAIL="luisgg@gmail.com"; dch --force-distribution -v "$(head -1 debian/changelog |sed -e "s%^.*(%%;s%).*$%%")+aurex.getent.$(date "+%Y%m%d.%H%M")" --distribution unstable "custom aurex patch to improve speed when retrieving user list"
 
 dpkg-buildpackage -rfakeroot -uc -sa -us
 cd ..
