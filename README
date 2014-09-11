@@ -1,0 +1,20 @@
+To rebuild with latest updates from upstream:
+- Install required build depends: subversion, devscripts, fakeroot, debhelper, gettext, (build-essential)A
+
+- remove old code and get latest upstream version:
+ svn export http://svn.code.sf.net/p/openmediavault/code/branches/0.5.x/deb/openmediavault
+
+- apply  20_getent.patch
+cd openmediavault; patch -p1 < ../20_getent.patch; cd ..
+
+- replace debian/rules:
+cat rules > openmediavault/debian/rules
+
+- update version and build
+
+cd openmediavault
+dch --force-distribution -v "$(head -1 debian/changelog |sed -e "s%^.*(%%;s%).*$%%")+aurex.getent.$(date "+%Y%m%d.%H%M")" --distribution unstable "custom aurex patch to improve speed when retrieving user list"
+
+dpkg-buildpackage -rfakeroot -uc -sa -us
+cd ..
+

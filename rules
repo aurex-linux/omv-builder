@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+OMV_PACKAGE := $(shell pwd | sed 's|.*/||')
+
+%:
+	dh $@ --parallel
+
+override_dh_installinit:
+	echo "OMV_GETENT_PASSWD=\"getent passwd |grep -v '^al[[:digit:]]'\"" >> $(CURDIR)/debian/openmediavault.openmediavault.default
+	dh_installinit -r --no-start --name=openmediavault
+	dh_installinit -r --no-start --name=openmediavault-beep
+	dh_installinit -r --no-start --name=openmediavault-configimport
+
+override_dh_install:
+	dh_install
+	dh_testdir
+	echo "Removing SCM files ..." >&2
+	find $(CURDIR)/debian/$(OMV_PACKAGE) \( -name .svn -o -name .git \) \
+	  -type d -print0 -prune | xargs -0 rm -rf
+
+override_dh_link:
+	echo "/etc/init.d/smbd /etc/init.d/samba" >>  $(CURDIR)/debian/openmediavault.links
+	dh_link
+
+override_dh_clean:
+	rm -f $(CURDIR)/debian/openmediavault.links 
+	sed -i -e "/^OMV_GETENT_PASSWD/d" $(CURDIR)/debian/openmediavault.openmediavault.default
+	dh_clean
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 700 debian/openmediavault/var/www/openmediavault/php-fcgi
+
