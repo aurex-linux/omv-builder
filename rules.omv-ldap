@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+OMV_PACKAGE := $(shell pwd | sed 's|.*/||')
+
+%:
+	dh $@ --parallel
+
+override_dh_install:
+	dh_install
+	dh_testdir
+	echo "Removing SCM files ..." >&2
+	find $(CURDIR)/debian/$(OMV_PACKAGE) \( -name .svn -o -name .git \) \
+	  -type d -print0 -prune | xargs -0 rm -rf
+

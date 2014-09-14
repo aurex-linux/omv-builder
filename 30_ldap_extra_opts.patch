@@ -1,0 +1,12 @@
+diff -uNr openmediavault-ldap/var/www/openmediavault/js/omv/module/admin/privilege/Ldap/Settings.js openmediavault-ldap.patched//var/www/openmediavault/js/omv/module/admin/privilege/Ldap/Settings.js
+--- openmediavault-ldap/var/www/openmediavault/js/omv/module/admin/privilege/Ldap/Settings.js	2014-01-01 16:29:29.980502000 +0100
++++ openmediavault-ldap.patched//var/www/openmediavault/js/omv/module/admin/privilege/Ldap/Settings.js	2014-09-15 01:07:03.574265240 +0200
+@@ -116,7 +116,7 @@
+ 				}],
+ 				value: "ou=Groups"
+ 			},{
+-				xtype: "textfield",
++				xtype: "textarea",
+ 				name: "extraoptions",
+ 				fieldLabel: _("Extra options"),
+ 				allowBlank: true,
