@@ -1,0 +1,12 @@
+diff -uNr openmediavault/usr/share/php/openmediavault/system.inc openmediavault.patched//usr/share/php/openmediavault/system.inc
+--- openmediavault/usr/share/php/openmediavault/system.inc	2014-08-04 00:00:10.626969000 +0200
++++ openmediavault.patched//usr/share/php/openmediavault/system.inc	2014-09-14 20:13:58.550276866 +0200
+@@ -3199,7 +3199,7 @@
+ 	 * @return An array of system user names, otherwise FALSE.
+ 	 */
+ 	public static function get() {
+-		$cmd = "export LANG=C; getent passwd";
++		$cmd = "export LANG=C; " . $GLOBALS['OMV_GETENT_PASSWD'] ;
+ 		@OMVUtil::exec($cmd, $output, $result);
+ 		if($result !== 0)
+ 			return FALSE;

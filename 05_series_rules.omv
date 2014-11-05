@@ -8,7 +8,7 @@ override_dh_installinit:
 	echo "OMV_GETENT_PASSWD=\"getent passwd |grep -v '^a0\|^al[[:digit:]]'\"" >> $(CURDIR)/debian/openmediavault.openmediavault.default
 	dh_installinit -r --no-start --name=openmediavault
 	dh_installinit -r --no-start --name=openmediavault-beep
-	dh_installinit -r --no-start --name=openmediavault-engined
+	dh_installinit -r --no-start --name=openmediavault-configimport
 
 override_dh_install:
 	dh_install
@@ -18,6 +18,11 @@ override_dh_install:
 	  -type d -print0 -prune | xargs -0 rm -rf
 
 override_dh_clean:
+	rm -f $(CURDIR)/debian/openmediavault.links 
 	sed -i -e "/^OMV_GETENT_PASSWD/d" $(CURDIR)/debian/openmediavault.openmediavault.default
 	dh_clean
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 700 debian/openmediavault/var/www/openmediavault/php-fcgi
 
