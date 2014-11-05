@@ -1,19 +1,26 @@
 To rebuild with latest updates from upstream:
-- Install required build depends: subversion, devscripts, fakeroot, debhelper, gettext, (build-essential)A
+- Install required build depends: subversion, devscripts, fakeroot, debhelper, gettext, (build-essential)
 
 - remove old code and get latest upstream version:
- svn export http://svn.code.sf.net/p/openmediavault/code/branches/0.5.x/deb/openmediavault
- svn export http://svn.code.sf.net/p/openmediavault/code/branches/0.5.x/deb/openmediavault-ldap/
+
+svn [-r 1559] export http://svn.code.sf.net/p/openmediavault/code/trunk/deb/openmediavault-ldap
+
+# svn export http://svn.code.sf.net/p/openmediavault/code/branches/0.5.x/deb/openmediavault
+# NO
+#  svn export http://svn.code.sf.net/p/openmediavault/code/branches/0.5.x/deb/openmediavault-ldap/
 
 - apply  20_getent.patch
 cd openmediavault; patch -p1 < ../20_getent.patch; cd ..
 
-- apply  30_ldap_extra_opts.patch
-cd openmediavault-ldap; patch -p1 < ../30_ldap_extra_opts.patch; cd ..
+# NO
+#- apply  30_ldap_extra_opts.patch
+#cd openmediavault-ldap; patch -p1 < ../30_ldap_extra_opts.patch; cd ..
 
 - replace debian/rules:
 cat rules.omv > openmediavault/debian/rules
-cat rules.omv-ldap > openmediavault-ldap/debian/rules
+
+# NO
+#cat rules.omv-ldap > openmediavault-ldap/debian/rules
 
 - update version and build
 
@@ -23,9 +30,10 @@ export DEBFULLNAME="Luis Antonio Garcia Gisbert"; export DEBEMAIL="luisgg@gmail.
 dpkg-buildpackage -rfakeroot -uc -sa -us
 cd ..
 
-cd openmediavault-ldap
-export DEBFULLNAME="Luis Antonio Garcia Gisbert"; export DEBEMAIL="luisgg@gmail.com"; dch --force-distribution -v "$(head -1 debian/changelog |sed -e "s%^.*(%%;s%).*$%%")+aurex.getent.$(date "+%Y%m%d.%H%M")" --distribution unstable "aurex patch to use textarea type control for ldap extra options"
+# NO
+#cd openmediavault-ldap
+#export DEBFULLNAME="Luis Antonio Garcia Gisbert"; export DEBEMAIL="luisgg@gmail.com"; dch --force-distribution -v "$(head -1 debian/changelog |sed -e "s%^.*(%%;s%).*$%%")+aurex.getent.$(date "+%Y%m%d.%H%M")" --distribution unstable "aurex patch to use textarea type control for ldap extra options"
 
-dpkg-buildpackage -rfakeroot -uc -sa -us
-cd ..
+#dpkg-buildpackage -rfakeroot -uc -sa -us
+#cd ..
 
